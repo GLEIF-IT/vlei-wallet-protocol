@@ -1,0 +1,70 @@
+{
+  "name": "vlei-wallet-protocol",
+  "version": "0.1.0",
+  "description": "Shared protocol for web apps and vLEI wallet browser extensions (polaris-web compatible)",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vladislavpopovwork/vlei-wallet-protocol.git"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./extension": {
+      "types": "./dist/extension.d.ts",
+      "import": "./dist/extension.js",
+      "default": "./dist/extension.js"
+    },
+    "./protocol": {
+      "types": "./dist/protocol.d.ts",
+      "import": "./dist/protocol.js",
+      "default": "./dist/protocol.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "extension": [
+        "./dist/extension.d.ts"
+      ],
+      "protocol": [
+        "./dist/protocol.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "PROTOCOL_DEMO.md"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --project unit",
+    "test:live": "vitest run --project live",
+    "test:all": "vitest run",
+    "test:e2e": "npm run build && playwright test -c e2e/playwright.config.ts",
+    "example:dev": "npm run build && npm --prefix examples/web-app run dev"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^22.15.0",
+    "jsdom": "^26.1.0",
+    "signify-ts": "0.3.0-rc1",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  },
+  "overrides": {
+    "libsodium-wrappers-sumo": "0.7.13",
+    "libsodium-sumo": "0.7.13"
+  }
+}
