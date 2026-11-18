@@ -14,7 +14,7 @@ if (!(await isExtensionInstalled())) throw new Error("vLEI Wallet extension not 
 
 // Sign in: reuse the tab's session, or ask the user to pick a credential
 const auth = (await restoreSession()) ?? (await connectIdentity({ message: "Select your credential" }));
-console.log("Signed in as", auth.identifier?.prefix);
+console.log("Signed in as", auth.identifier ?? auth.credential);
 
 // Signed request to your API
 const url = "https://api.example.com/reports";

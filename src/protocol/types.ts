@@ -22,8 +22,11 @@ export interface AuthorizeResultIdentifier {
   name?: string;
 }
 
+/** Sign-in result: `identifier` (sign-in with an identifier) and/or `credential` (sign-in with a credential). */
 export interface AuthorizeResult {
+  /** The selected credential; its holder is the session's identifier. */
   credential?: AuthorizeResultCredential;
+  /** The selected identifier; may be omitted after a sign-in with a credential. */
   identifier?: AuthorizeResultIdentifier;
   /** One-time mode (`session.oneTime`): headers signed for the page origin. */
   headers?: Record<string, string>;

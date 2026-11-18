@@ -51,7 +51,7 @@ if (!(await isExtensionInstalled())) throw new Error("vLEI Wallet extension not 
 
 // Sign in: reuse the tab's session, or ask the user to pick a credential
 const auth = (await restoreSession()) ?? (await connectIdentity({ message: "Select your credential" }));
-console.log("Signed in as", auth.identifier?.prefix);
+console.log("Signed in as", auth.identifier ?? auth.credential);
 
 // Signed request to your API
 const url = "https://api.example.com/reports";
@@ -164,6 +164,10 @@ until `expiry` (epoch ms, chosen by the extension). Methods marked *required* be
 session exists. With `session: { oneTime: true }`, no session is created and the reply carries one-time
 signed `headers` instead. `authorize*` always prompts; `message` is shown in the prompt.
 
+**Who signed in.** The reply says what the user selected: `identifier` after a sign-in with an identifier,
+`credential` after a sign-in with a credential (the extension may add `identifier` too). With a credential,
+the session's identifier is the credential's holder, and its AID is in the credential (`credential.raw.sad.a.i`).
+
 | Method | Message type | Session | User prompt |
 |---|---|---|---|
 | [`authorize`](#clientauthorize) | `/signify/authorize` | creates | yes |
@@ -204,7 +208,7 @@ signed `headers` instead. `authorize*` always prompts; `message` is shown in the
 
 | | |
 |---|---|
-| Description | Like `authorize`, credentials only; the session's identifier is the credential's holder |
+| Description | Like `authorize`, credentials only; the session's identifier is the credential's holder ([who signed in](#3-client-api-and-messages)) |
 | Message type | `/signify/authorize/credential` |
 | Payload | `{ message?: string; session?: { oneTime?: boolean } }` |
 | Extra field | `schema?: string` (as in `authorize`) |
@@ -228,7 +232,7 @@ signed `headers` instead. `authorize*` always prompts; `message` is shown in the
 | Description | Returns the current session of this tab and origin; error `Session not found` if there is none |
 | Message type | `/signify/get-session-info` |
 | Payload | – |
-| Reply payload | `AuthorizeResult` (`identifier`, `credential?`, `expiry`) |
+| Reply payload | `AuthorizeResult` (`identifier` and/or `credential`, as in the sign-in; `expiry`) |
 
 ### client.clearSession
 
@@ -452,6 +456,7 @@ browser.runtime.onMessage.addListener((message, sender) => {
 | **Added** `payload` on rejected errors | Error replies keep their payload |
 | **Added** `expiry`, `identifier.name` in `AuthorizeResult` | What extensions already return |
 | **Added** extension side | `createContentBridge`, `createBackgroundRouter`, runtime glue, `HandlerError`, [section 8](#extension-side) |
+| **Clarified** sign-in reply | `identifier` and/or `credential`: a sign-in with a credential may omit `identifier` |
 | **Clarified** replies | One per request, `{}` when empty, error for unknown types, handshake re-announcement |
 | **TODO** `authorizeAutoSignin` | Stub for an existing extension message; extensions may answer it as unsupported |
 | **Removed** `configWorkflowIssueCredential` | No extension implements it |
@@ -484,8 +489,11 @@ export interface AuthorizeResultIdentifier {
   name?: string;
 }
 
+/** Sign-in result: `identifier` (sign-in with an identifier) and/or `credential` (sign-in with a credential). */
 export interface AuthorizeResult {
+  /** The selected credential; its holder is the session's identifier. */
   credential?: AuthorizeResultCredential;
+  /** The selected identifier; may be omitted after a sign-in with a credential. */
   identifier?: AuthorizeResultIdentifier;
   /** One-time mode: headers signed for the page origin. */
   headers?: Record<string, string>;

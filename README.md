@@ -1,6 +1,11 @@
 # vlei-wallet-protocol
 
-One library for both sides of the web app ↔ vLEI wallet browser extension protocol
+> [!TIP]
+> **New here and want a quick start? Go to [docs/HACKMD.md](./docs/HACKMD.md).** It walks you from zero to a working
+> web app and a demo wallet extension in a few minutes. This README goes deep: entry points, installation options,
+> the full API, extending the protocol and tests.
+
+This is one library for both sides of the web app ↔ vLEI wallet browser extension protocol
 (polaris-web compatible). The protocol is specified in [PROTOCOL_DEMO.md](./PROTOCOL_DEMO.md).
 Web apps and extensions import the same message types, payload types, error strings and envelope rules.
 
@@ -24,10 +29,6 @@ npm install github:vladislavpopovwork/vlei-wallet-protocol#v0.1.0
 ```json
 { "dependencies": { "vlei-wallet-protocol": "github:vladislavpopovwork/vlei-wallet-protocol#v0.1.0" } }
 ```
-
-The repository is private: you need read access to it on GitHub and an SSH key for that account
-(`git+ssh://git@github.com/vladislavpopovwork/vlei-wallet-protocol.git#v0.1.0` is the explicit form). In CI, use an HTTPS URL
-with a read-only token from a secret instead; never commit the token.
 
 To work on the library and an app side by side, depend on a local checkout instead and rebuild after every change:
 
@@ -60,7 +61,7 @@ const SCHEMA_SAID = "EBfdlu8R27Fbx-ehrqwImnK-8Cm79sqbAQ4MmvEAYqao";
 
 if (!(await isExtensionInstalled())) throw new Error("vLEI Wallet extension not found");
 const auth = (await restoreSession()) ?? (await connectIdentity({ message: "Select your credential" }));
-console.log("Signed in as", auth.identifier?.prefix ?? auth.credential?.cesr);
+console.log("Signed in as", auth.identifier ?? auth.credential);
 
 const url = "https://api.example.com/reports";
 await fetch(url, { headers: await signRequest(url, "GET") });
@@ -82,7 +83,7 @@ SSR-safe). For anything else use the client directly: `createClient().signData({
 
 ## Extension
 
-**Content script** — answers the handshake, shows in-page prompts (`local` handlers) and relays the rest to the
+**Content script** - answers the handshake, shows in-page prompts (`local` handlers) and relays the rest to the
 background; exactly one `/signify/reply` per request:
 
 ```ts
@@ -100,7 +101,7 @@ createContentBridge({
 });
 ```
 
-**Background** — one typed handler per supported message type. Origin and tab come from the browser's `sender`,
+**Background** - one typed handler per supported message type. Origin and tab come from the browser's `sender`,
 never from the message. Throw `HandlerError(message, payload?)` to send an error reply; return nothing to reply `{}`.
 Unregistered types get an `Unsupported message type: …` error reply. `requireActiveTab` answers requests from
 background tabs with an error.
@@ -148,9 +149,11 @@ implementation: `src/pages/content/index.tsx` (bridge + sign-in dialog) and
 | Example | What it shows | Run |
 |---|---|---|
 | [`examples/web-app`](./examples/web-app) | Plain Vite page: detection, sign-in (AID / credential / one-time / schema filter), session restore, signed requests, signed data, issuance, CESR, raw messages | `npm run example:dev` → http://localhost:3000 |
+| [`docs/examples/web-app`](./docs/examples/web-app) | Minimal web app: detection, sign-in, session restore, signed request | `npm install && npm run dev` → http://localhost:5173 |
+| [`docs/examples/demo-extension`](./docs/examples/demo-extension) | Demo wallet extension without KERIA: content bridge, in-page sign-in, sessions in the background | `npm install && npm run build`, load `dist` unpacked |
 
-The web app needs a wallet extension in the browser (e.g. the vLEI Wallet: build it, load `dist/chrome` unpacked)
-connected to a KERIA agent. An extension example built on `vlei-wallet-protocol/extension` is planned.
+The web apps need a wallet extension in the browser: the demo extension, or the vLEI Wallet (build it, load
+`dist/chrome` unpacked) connected to a KERIA agent.
 
 ## Extending the protocol
 
