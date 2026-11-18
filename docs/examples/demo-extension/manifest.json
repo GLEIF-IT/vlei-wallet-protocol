@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "vLEI Demo Wallet",
+  "version": "0.1.0",
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["http://localhost/*"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ]
+}

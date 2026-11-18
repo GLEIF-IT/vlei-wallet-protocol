@@ -1,0 +1,14 @@
+{
+  "name": "vlei-demo-extension",
+  "private": true,
+  "scripts": {
+    "build": "esbuild content.ts background.ts manifest.json --bundle --outdir=dist --loader:.json=copy"
+  },
+  "dependencies": {
+    "vlei-wallet-protocol": "github:vladislavpopovwork/vlei-wallet-protocol#v0.1.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.1.0",
+    "esbuild": "^0.25.0"
+  }
+}
