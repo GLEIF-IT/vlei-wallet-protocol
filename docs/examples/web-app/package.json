@@ -6,7 +6,7 @@
     "dev": "vite --port 5173"
   },
   "dependencies": {
-    "vlei-wallet-protocol": "github:vladislavpopovwork/vlei-wallet-protocol#v0.1.0"
+    "vlei-wallet-protocol": "github:GLEIF-IT/vlei-wallet-protocol#v0.1.0"
   },
   "devDependencies": {
     "vite": "^7.0.0"

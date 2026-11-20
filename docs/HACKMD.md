@@ -84,7 +84,7 @@ Create a folder and put three files in it.
     "dev": "vite --port 5173"
   },
   "dependencies": {
-    "vlei-wallet-protocol": "github:vladislavpopovwork/vlei-wallet-protocol#v0.1.0"
+    "vlei-wallet-protocol": "github:GLEIF-IT/vlei-wallet-protocol#v0.1.0"
   },
   "devDependencies": {
     "vite": "^7.0.0"
@@ -174,7 +174,7 @@ Open http://localhost:5173.
   `fetch(url, { headers: await signRequest(url, "GET") })`, and the server verifies the signature by the AID.
 - If the user refused or there is no session, the function throws an error - hence `.catch` everywhere.
 
-All functions and their errors are in [PROTOCOL_DEMO.md, section 2](https://github.com/vladislavpopovwork/vlei-wallet-protocol/blob/main/PROTOCOL_DEMO.md#2-wallet-functions).
+All functions and their errors are in [PROTOCOL_DEMO.md, section 2](https://github.com/GLEIF-IT/vlei-wallet-protocol/blob/main/PROTOCOL_DEMO.md#2-wallet-functions).
 
 ---
 
@@ -208,7 +208,7 @@ Create a folder and put four files in it.
     "build": "esbuild content.ts background.ts manifest.json --bundle --outdir=dist --loader:.json=copy"
   },
   "dependencies": {
-    "vlei-wallet-protocol": "github:vladislavpopovwork/vlei-wallet-protocol#v0.1.0"
+    "vlei-wallet-protocol": "github:GLEIF-IT/vlei-wallet-protocol#v0.1.0"
   },
   "devDependencies": {
     "@types/chrome": "^0.1.0",
@@ -354,8 +354,8 @@ of supported messages. For each there is ready code - take it from there.
 | Credential issuance | vLEI Wallet: [`src/pages/background/services/credential-issuance.ts`](https://github.com/GLEIF-IT/signify-browser-extension/blob/main/src/pages/background/services/credential-issuance.ts) | `issueBatch`: request validation, the registry, issuance one by one and the list of the already issued ones on error (`issued`). |
 | A sign-in window instead of `confirm()` | vLEI Wallet: [`src/pages/content/index.tsx`](https://github.com/GLEIF-IT/signify-browser-extension/blob/main/src/pages/content/index.tsx) | `createContentBridge` with `local` handlers for `authorize*`: show a window with a list of sign-ins, wait for a choice or a refusal (`PROTOCOL_ERRORS.cancelled`). |
 | All messages in a working wallet | vLEI Wallet: [`src/pages/background/handlers/protocol.ts`](https://github.com/GLEIF-IT/signify-browser-extension/blob/main/src/pages/background/handlers/protocol.ts) | `createBackgroundRouter` for all message types: sessions, signatures, credential issuance with confirmation in the extension window, vendor configuration. |
-| Check that nothing is forgotten | [PROTOCOL_DEMO.md, section 6](https://github.com/vladislavpopovwork/vlei-wallet-protocol/blob/main/PROTOCOL_DEMO.md#6-implementing-an-extension) | The checklist at the end of the section: the handshake with the site, one reply per request, errors, windows, keys do not reach the page. |
-| Your own message types | [README: Extending the protocol](https://github.com/vladislavpopovwork/vlei-wallet-protocol#extending-the-protocol) | How to declare a new message once so that both the site and the wallet see its types. |
+| Check that nothing is forgotten | [PROTOCOL_DEMO.md, section 6](https://github.com/GLEIF-IT/vlei-wallet-protocol/blob/main/PROTOCOL_DEMO.md#6-implementing-an-extension) | The checklist at the end of the section: the handshake with the site, one reply per request, errors, windows, keys do not reach the page. |
+| Your own message types | [README: Extending the protocol](https://github.com/GLEIF-IT/vlei-wallet-protocol#extending-the-protocol) | How to declare a new message once so that both the site and the wallet see its types. |
 
 In a real wallet, keep sessions in `chrome.storage.session`, not in a `Map`: Chrome puts the service worker to sleep,
 and the data in memory is lost.
@@ -445,12 +445,12 @@ the same protocol: the same handshake with the site, the same message types and 
 
 | Topic | Where |
 |---|---|
-| All messages, their fields and replies | [PROTOCOL_DEMO.md, section 3](https://github.com/vladislavpopovwork/vlei-wallet-protocol/blob/main/PROTOCOL_DEMO.md#3-client-api-and-messages) |
-| How messages travel between the site and the wallet | [PROTOCOL_DEMO.md, section 4](https://github.com/vladislavpopovwork/vlei-wallet-protocol/blob/main/PROTOCOL_DEMO.md#4-transport-and-handshake) |
-| Errors | [PROTOCOL_DEMO.md, section 5](https://github.com/vladislavpopovwork/vlei-wallet-protocol/blob/main/PROTOCOL_DEMO.md#5-errors) |
-| TypeScript types | [PROTOCOL_DEMO.md, section 8](https://github.com/vladislavpopovwork/vlei-wallet-protocol/blob/main/PROTOCOL_DEMO.md#8-types) |
-| Installation, credential issuance, tests | [README](https://github.com/vladislavpopovwork/vlei-wallet-protocol#readme) |
-| Ready files of the examples from this page | [`docs/examples`](https://github.com/vladislavpopovwork/vlei-wallet-protocol/tree/main/docs/examples) |
+| All messages, their fields and replies | [PROTOCOL_DEMO.md, section 3](https://github.com/GLEIF-IT/vlei-wallet-protocol/blob/main/PROTOCOL_DEMO.md#3-client-api-and-messages) |
+| How messages travel between the site and the wallet | [PROTOCOL_DEMO.md, section 4](https://github.com/GLEIF-IT/vlei-wallet-protocol/blob/main/PROTOCOL_DEMO.md#4-transport-and-handshake) |
+| Errors | [PROTOCOL_DEMO.md, section 5](https://github.com/GLEIF-IT/vlei-wallet-protocol/blob/main/PROTOCOL_DEMO.md#5-errors) |
+| TypeScript types | [PROTOCOL_DEMO.md, section 8](https://github.com/GLEIF-IT/vlei-wallet-protocol/blob/main/PROTOCOL_DEMO.md#8-types) |
+| Installation, credential issuance, tests | [README](https://github.com/GLEIF-IT/vlei-wallet-protocol#readme) |
+| Ready files of the examples from this page | [`docs/examples`](https://github.com/GLEIF-IT/vlei-wallet-protocol/tree/main/docs/examples) |
 | The original protocol this one is based on | [polaris-web](https://github.com/WebOfTrust/polaris-web) |
 
 <a id="troubleshooting"></a>

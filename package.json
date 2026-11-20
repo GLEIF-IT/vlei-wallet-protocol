@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vladislavpopovwork/vlei-wallet-protocol.git"
+    "url": "git+https://github.com/GLEIF-IT/vlei-wallet-protocol.git"
   },
   "type": "module",
   "sideEffects": false,

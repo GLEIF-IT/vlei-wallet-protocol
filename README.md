@@ -23,11 +23,11 @@ Not on a registry: install it from the git repository, pinned to a release tag. 
 `prepare` script (which builds `dist/`) and installs the result like any other package.
 
 ```bash
-npm install github:vladislavpopovwork/vlei-wallet-protocol#v0.1.0
+npm install github:GLEIF-IT/vlei-wallet-protocol#v0.1.0
 ```
 
 ```json
-{ "dependencies": { "vlei-wallet-protocol": "github:vladislavpopovwork/vlei-wallet-protocol#v0.1.0" } }
+{ "dependencies": { "vlei-wallet-protocol": "github:GLEIF-IT/vlei-wallet-protocol#v0.1.0" } }
 ```
 
 To work on the library and an app side by side, depend on a local checkout instead and rebuild after every change:
