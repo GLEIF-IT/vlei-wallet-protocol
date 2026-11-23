@@ -84,7 +84,7 @@ Create a folder and put three files in it.
     "dev": "vite --port 5173"
   },
   "dependencies": {
-    "vlei-wallet-protocol": "github:GLEIF-IT/vlei-wallet-protocol#v0.1.0"
+    "vlei-wallet-protocol": "github:GLEIF-IT/vlei-wallet-protocol#v0.1.1"
   },
   "devDependencies": {
     "vite": "^7.0.0"
@@ -92,7 +92,7 @@ Create a folder and put three files in it.
 }
 ```
 
-- `vlei-wallet-protocol` - the library. It is not in the npm registry: npm downloads it from git by the tag `v0.1.0` and builds it itself.
+- `vlei-wallet-protocol` - the library. It is not in the npm registry: npm downloads it from git by the tag `v0.1.1` and builds it itself.
 - `vite` - a dev server: serves the page and loads npm packages in the browser.
 
 `index.html` - an ordinary page: a status, two buttons and a place for the reply.
@@ -208,7 +208,7 @@ Create a folder and put four files in it.
     "build": "esbuild content.ts background.ts manifest.json --bundle --outdir=dist --loader:.json=copy"
   },
   "dependencies": {
-    "vlei-wallet-protocol": "github:GLEIF-IT/vlei-wallet-protocol#v0.1.0"
+    "vlei-wallet-protocol": "github:GLEIF-IT/vlei-wallet-protocol#v0.1.1"
   },
   "devDependencies": {
     "@types/chrome": "^0.1.0",
