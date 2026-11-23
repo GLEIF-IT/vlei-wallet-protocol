@@ -1,6 +1,6 @@
 {
   "name": "vlei-wallet-protocol",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shared protocol for web apps and vLEI wallet browser extensions (polaris-web compatible)",
   "license": "Apache-2.0",
   "repository": {
