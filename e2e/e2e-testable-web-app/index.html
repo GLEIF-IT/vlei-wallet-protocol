@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vLEI Wallet E2E Test App</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>vLEI Wallet E2E test app</h1>
+      <p>
+        A web app talking to a vLEI wallet browser extension through
+        <code>vlei-wallet-protocol</code>. Every result is shown as JSON:
+        <code>{ ok: true, result }</code> or <code>{ ok: false, error, payload }</code>.
+      </p>
+
+      <section>
+        <h2>1. Extension</h2>
+        <p id="status" class="status" data-testid="status">Checking for extension…</p>
+        <div class="buttons">
+          <button id="btn-detect" data-testid="btn-detect" class="secondary">Check again</button>
+        </div>
+      </section>
+
+      <section id="actions">
+        <h2>2. Session</h2>
+        <label for="schema-filter">Credential schema filter (SAID, optional)</label>
+        <input type="text" id="schema-filter" data-testid="schema-filter" placeholder="E…" />
+        <label class="opt">
+          <input type="checkbox" id="one-time" data-testid="one-time" />
+          One-time (signed headers, no session)
+        </label>
+        <div class="buttons">
+          <button id="btn-aid" data-testid="btn-aid">Sign in with AID</button>
+          <button id="btn-cred" data-testid="btn-cred">Sign in with credential</button>
+          <button id="btn-any" data-testid="btn-any">AID or credential</button>
+          <button id="btn-switch" data-testid="btn-switch" class="secondary">Switch identity</button>
+          <button id="btn-clear" data-testid="btn-clear" class="secondary">Clear session</button>
+        </div>
+        <dl id="summary" data-testid="summary"></dl>
+        <pre id="session" data-testid="session"></pre>
+      </section>
+
+      <section>
+        <h2>3. Signed request</h2>
+        <label for="sign-url">URL</label>
+        <div class="row">
+          <input type="text" id="sign-url" data-testid="sign-url" />
+          <select id="sign-method" data-testid="sign-method">
+            <option>GET</option>
+            <option>POST</option>
+            <option>PUT</option>
+            <option>DELETE</option>
+          </select>
+        </div>
+        <div class="buttons">
+          <button id="btn-sign-request" data-testid="btn-sign-request">Sign request</button>
+        </div>
+        <pre id="sign-request-result" data-testid="sign-request-result"></pre>
+      </section>
+
+      <section>
+        <h2>4. Sign data</h2>
+        <label for="sign-data-items">One item per line</label>
+        <textarea id="sign-data-items" data-testid="sign-data-items">hello
+world</textarea>
+        <div class="buttons">
+          <button id="btn-sign-data" data-testid="btn-sign-data">Sign data</button>
+        </div>
+        <pre id="sign-data-result" data-testid="sign-data-result"></pre>
+      </section>
+
+      <section>
+        <h2>5. Issue a credential</h2>
+        <p>The schema must already be resolved by the wallet's KERIA agent. You approve in an extension window.</p>
+        <label for="issue-schema">Schema SAID</label>
+        <input type="text" id="issue-schema" data-testid="issue-schema" placeholder="E…" />
+        <label for="issue-registry">Registry name</label>
+        <input type="text" id="issue-registry" data-testid="issue-registry" value="example-registry" />
+        <label for="issue-attributes">Attributes (JSON object, no "d" or "i")</label>
+        <textarea id="issue-attributes" data-testid="issue-attributes">{}</textarea>
+        <div class="buttons">
+          <button id="btn-issue" data-testid="btn-issue">Issue</button>
+        </div>
+        <pre id="issue-result" data-testid="issue-result"></pre>
+      </section>
+
+      <section>
+        <h2>6. Credential CESR</h2>
+        <label for="cesr-said">Credential SAID</label>
+        <input type="text" id="cesr-said" data-testid="cesr-said" placeholder="E…" />
+        <div class="buttons">
+          <button id="btn-cesr" data-testid="btn-cesr">Fetch CESR</button>
+        </div>
+        <pre id="cesr-result" data-testid="cesr-result"></pre>
+      </section>
+
+      <section>
+        <h2>7. Raw message</h2>
+        <p>Any message type through <code>client.sendMessage(type, { payload })</code>.</p>
+        <label for="raw-type">Type</label>
+        <input type="text" id="raw-type" data-testid="raw-type" value="/signify/get-session-info" />
+        <label for="raw-payload">Payload (JSON, optional)</label>
+        <textarea id="raw-payload" data-testid="raw-payload"></textarea>
+        <div class="buttons">
+          <button id="btn-raw" data-testid="btn-raw">Send</button>
+        </div>
+        <pre id="raw-result" data-testid="raw-result"></pre>
+      </section>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
